@@ -18,7 +18,7 @@ function addQuestion(question) {
 	new Jui(`
 				<div class="question">
 					<p>${question.text}</p>
-					<span>Answered: ${question.answered}</span>
+					<span class="answered">Answered: ${question.answered}</span>
 				</div>`)
 	.prop('data-id', question._id)
 	.appendTo(questionContainer);

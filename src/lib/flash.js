@@ -4,7 +4,7 @@ const dataCookieOptions = {
 	httpOnly: true,
 	path: '/',
 	sameSite: 'strict',
-	secure: !!process.env.HTTPS,
+	secure: !process.env.NO_HTTPS,
 	maxAge: 7 * 24 * 60 * 60 * 1000,  // 1-week timeout
 }
 

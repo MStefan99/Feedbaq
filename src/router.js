@@ -49,6 +49,22 @@ router.get('/presentations/:id', async (req, res) => {
 });
 
 
+router.get('/presentations/:id/splash', async (req, res) => {
+	const db = await openDB('feedbaq');
+
+	const presentation = await db.collection('presentations').findOne({
+		_id: ObjectID(req.params.id)
+	});
+
+	res.render('splash', {
+		name: presentation.name,
+		host: req.get('host'),
+		id: presentation._id,
+		protocol: process.env.NO_HTTPS? 'http://' : 'https://'
+	});
+});
+
+
 router.get('/presentations/:id/present', async (req, res) => {
 	const db = await openDB('feedbaq');
 
@@ -67,6 +83,7 @@ router.post('/presentations', async (req, res) => {
 	if (!req.body.name) {
 		res.flash({
 			title: 'No name specified!',
+			info: 'Please choose a name for your presentation',
 			type: 'error'
 		}).redirect(303, '/presentations/new/');
 	} else {

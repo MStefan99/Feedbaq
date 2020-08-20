@@ -19,7 +19,7 @@ html(lang='en')
 				div#flash-container
 					each flash in flashes
 						div(class='flash ' + flash.type)
-							h2= flash.title
+							b= flash.title
 							span.separator
 							p= flash.info
 			block content
@@ -27,3 +27,5 @@ html(lang='en')
 		footer
 			p Developed by #[a(href='https://mstefan99.com/') Mikhail Stefantsev]
 			block footer
+
+		script(async type='text/javascript' src='/js/main.js')

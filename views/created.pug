@@ -7,19 +7,22 @@ block head
 
 block content
 	div#content-container
-		h2= 'Presentation "' + name + '" created!'
+		h1= 'Presentation "' + name + '" created!'
 
 		div.section
-			p.
+			p.warning.
 				Important! You will not see the presentation ID again. Save it if you might
 				want to review collected data later.
 
 		div.section
-			span= 'Your presentation ID is: '
+			span= 'Your presentation ID is '
 			b= id
 
 		div.section
-			a(href='/presentations/' + id + '/present/') Open presentation
-			br
-			span Share this link with your audience:
-			a(href= host + '/p/' + id)= host + '/p/' + id
+			a(href='/presentations/' + id + '/present/') Open presenter view
+			p You now have to share this presentation with your audience.
+			p Option 1. Share this link via your messenger or email:
+			|  #[a(href= '/p/' + id)= host + '/p/' + id]
+			p Option 2.
+			|  Open #[a(href= '/presentations/' + id + '/splash/') this page]
+			|  and share your screen
