@@ -43,8 +43,17 @@ router.get('/presentations/:id', async (req, res) => {
 });
 
 
-router.get('/presentations/:id/manage', (req, res) => {
-	res.render('manage');
+router.get('/presentations/:id/manage', async (req, res) => {
+	const db = await openDB('feedbaq');
+
+	const presentation = await db.collection('presentations').findOne({
+		_id: ObjectID(req.params.id)
+	});
+
+	res.render('manage', {
+		name: presentation.name,
+		id: presentation._id
+	});
 });
 
 
@@ -70,5 +79,80 @@ router.post('/presentations', async (req, res) => {
 		});
 	}
 });
+
+
+router.post('/presentations/:id/feedback', async (req, res) => {
+	if (!req.body.text) {
+		res.status(400).send('NO_DATA');
+		return;
+	}
+
+	const feedback = {
+		text: req.body.text
+	}
+
+	const db = await openDB('feedbaq');
+	await db.collection('presentations').updateOne({
+		_id: req.params.id
+	}, {
+		$push: {
+			feedback: req.body.text
+		}
+	});
+
+	res.sendStatus(201).json(feedback);
+});
+
+
+
+router.post('/presentations/:id/questions', async (req, res) => {
+	if (!req.body.text) {
+		res.status(400).send('NO_DATA');
+		return;
+	}
+
+	const question = {
+		text: req.body.text,
+		answered: false
+	}
+
+	const db = await openDB('feedbaq');
+	await db.collection('presentations').updateOne({
+		_id: req.params.id
+	}, {
+		$push: {
+			questions: {
+				text: req.body.text,
+				answered: false
+			}
+		}
+	});
+
+	res.sendStatus(201).json(question);
+});
+
+
+router.get('/presentations/:id/feedback', async (req, res) => {
+	const db = await openDB('feedbaq');
+
+	const presentation = db.collection('presentations').findOne({
+		_id: ObjectID(req.params.id)
+	});
+
+	res.json(presentation.feedback);
+});
+
+
+router.get('/presentations/:id/questions', async (req, res) => {
+	const db = await openDB('feedbaq');
+
+	const presentation = db.collection('presentations').findOne({
+		_id: ObjectID(req.params.id)
+	});
+
+	res.json(presentation.questions);
+});
+
+
 
 module.exports = router;

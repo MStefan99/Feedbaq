@@ -31,6 +31,15 @@ html
 			&:hover
 				color var(--kinda-gray)
 
+		.container-horizontal
+			display flex
+			flex-flow row nowrap
+			justify-content space-between
+
+			& > div
+				margin 0 .5em
+				flex 1 1
+
 		header
 			height 10vh
 			padding 0 5vw
@@ -89,7 +98,7 @@ html
 			flex 1 0
 
 			.section
-				margin 0 1em
+				margin 1em
 
 			.center
 				margin 0 auto
@@ -108,9 +117,6 @@ html
 					font-size 3em
 
 				form
-					margin-top 5vh
-					margin-bottom 5vh
-
 					label
 						width 100%
 						display inline-block
@@ -196,11 +202,6 @@ html
 					i
 						display inline-block
 						margin .5em 0
-
-					#username, #metropolia-domain
-						max-width 50%
-						width max-content
-						display inline
 
 				table
 					border-collapse collapse

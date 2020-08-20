@@ -7,7 +7,20 @@ block head
 
 block content
 	div#content-container
-		h2= 'Welcome to presentation ' + name
+		h2= 'Welcome to ' + name
 
-		a(href='/presentations/' + id + '/feedback/new') Ask a question
-		a(href='/presentations/' + id + '/questions/new') Submit feedback
+		div.container-horizontal
+			div
+				h2 Ask a question
+				form(action='/presentations/' + id + '/questions/new' method='post')
+					label(for='new-question') Your question
+					input#new-question(type='text' placeholder='Type your question here'
+						autocomplete='off')
+					input(type='submit' value='Submit question')
+			div
+				h2 Leave feedback
+				form(action='/presentations/' + id + '/feedback/new' method='post')
+					label(for='new-feedback') Your feedback
+					input#new-feedback(type='text' placeholder='What do you have to say?'
+						autocomplete='off')
+					input(type='submit' value='Submit feedback')
