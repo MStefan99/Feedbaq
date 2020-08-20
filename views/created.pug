@@ -7,7 +7,7 @@ block head
 
 block content
 	div#content-container
-		h2 Presentation created!
+		h2= 'Presentation "' + name + '" created!'
 
 		div.section
 			p.
@@ -19,7 +19,7 @@ block content
 			b= id
 
 		div.section
-			a(href='/presentations/' + id + '/manage/') Open presentation
+			a(href='/presentations/' + id + '/present/') Open presentation
 			br
 			span Share this link with your audience:
 			a(href= host + '/p/' + id)= host + '/p/' + id

@@ -2,7 +2,7 @@ extends layout
 
 
 block head
-	title= name + ' - Manage | Feedbaq'
+	title= name + ' - Present | Feedbaq'
 
 
 block content
@@ -17,3 +17,5 @@ block content
 			div
 				h2 Feedback
 				div.container#feedback-container
+
+	script(async type='module' src='/js/present.js')
