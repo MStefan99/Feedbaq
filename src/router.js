@@ -132,7 +132,7 @@ router.post('/presentations/:id/feedback', async (req, res) => {
 
 	socket.sendFeedback(feedback);
 	res.flash({
-		title: 'Feedback saved',
+		title: 'Feedback sent',
 		info: 'Your feedback was sent to the presenter'
 	})
 	.redirect(303, '/presentations/' + req.params.id + '/');
@@ -166,7 +166,7 @@ router.post('/presentations/:id/questions', async (req, res) => {
 
 	socket.sendQuestion(question);
 	res.flash({
-		title: 'Question saved',
+		title: 'Question sent',
 		info: 'Your question was sent to the presenter'
 	})
 	.redirect(303, '/presentations/' + req.params.id + '/');

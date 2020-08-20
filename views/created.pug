@@ -19,10 +19,11 @@ block content
 			b= id
 
 		div.section
-			a(href='/presentations/' + id + '/present/') Open presenter view
+			a(href='/presentations/' + id + '/present/' target='_blank') Open presenter view
 			p You now have to share this presentation with your audience.
 			p Option 1. Share this link via your messenger or email:
-			|  #[a(href= '/p/' + id)= host + '/p/' + id]
-			p Option 2.
-			|  Open #[a(href= '/presentations/' + id + '/splash/') this page]
-			|  and share your screen
+			|  #[a(href= '/p/' + id target='_blank')= host + '/p/' + id]
+			p.
+				Option 2.
+				Open #[a(href= '/presentations/' + id + '/splash/' target='_blank') this page]
+				and share your screen

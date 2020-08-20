@@ -45,8 +45,8 @@ module.exports = () => {
 					.from(flashData, 'base64')
 					.toString()));
 			});
+			res.clearCookie('FC', dataCookieOptions);
 		}
-		res.clearCookie('FC', dataCookieOptions);
 
 		res.flash = flash;
 		next();
