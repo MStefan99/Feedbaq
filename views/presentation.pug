@@ -1,0 +1,13 @@
+extends layout
+
+
+block head
+	title= name + ' | Feedbaq'
+
+
+block content
+	div#content-container
+		h2= 'Welcome to presentation ' + name
+
+		a(href='/presentations/' + id + '/feedback/new') Ask a question
+		a(href='/presentations/' + id + '/questions/new') Submit feedback

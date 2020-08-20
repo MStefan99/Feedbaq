@@ -1,0 +1,14 @@
+extends layout
+
+block head
+	title New presentation | Feedbaq
+
+block content
+	div#content-container
+		h2 Create new presentation
+
+		form(action='/presentations/' method='post')
+			label(for='new-pr-name') Name
+			input#new-pr-name(name='name' placeholder='Name of your presentation'
+				autocomplete='off')
+			input(type='submit' value='Create')

@@ -1,0 +1,25 @@
+extends layout
+
+
+block head
+	title Presentation created | Feedbaq
+
+
+block content
+	div#content-container
+		h2 Presentation created!
+
+		div.section
+			p.
+				Important! You will not see the presentation ID again. Save it if you might
+				want to review collected data later.
+
+		div.section
+			span= 'Your presentation ID is: '
+			b= id
+
+		div.section
+			a(href='/presentations/' + id + '/manage/') Open presentation
+			br
+			span Share this link with your audience:
+			a(href= host + '/p/' + id)= host + '/p/' + id

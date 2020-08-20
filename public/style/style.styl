@@ -1,0 +1,237 @@
+html
+	color white
+	font-size 12pt
+	font-family sans-serif
+	scroll-behavior smooth
+
+	body
+		display flex
+		flex-direction column
+		min-height 100vh
+		margin 0
+		overflow-x hidden
+		background var(--background-color)
+		--theme-color #ffc14b
+		--healthy-red #bd0000
+		--kinda-gray #888
+		--background-color #28282f
+		--panel-color #00000088
+
+		::selection
+			background var(--theme-color)
+			color white
+
+		.hidden
+			display none !important
+
+		a
+			font-weight bold
+			color white
+
+			&:hover
+				color var(--kinda-gray)
+
+		header
+			height 10vh
+			padding 0 5vw
+			position sticky
+			top 0
+			left 0
+			right 0
+			background var(--panel-color)
+			display flex
+			flex-flow row wrap
+			align-items center
+			justify-content space-between
+			z-index 10
+			transition background-color .2s linear
+
+			@media screen and (min-width 768px)
+				background none
+
+			a
+				display inherit
+				align-items inherit
+
+				span
+					margin-left .5em
+
+			img
+				height 5vh
+
+		#flash-container
+			width 90vw
+			margin 0 auto
+
+			.flash
+				display flex
+				flex-flow row nowrap
+				align-items center
+				margin 1em 0
+				border-radius 10px
+				padding 1em 2em
+				color #fff
+
+				&.ok
+					background #35532a
+
+				&.warning
+					background #634b08
+
+				&.error
+					background #680519
+
+			b
+				margin-right 1em
+
+		main
+			margin-bottom 10vh
+			flex 1 0
+
+			.section
+				margin 0 1em
+
+			.center
+				margin 0 auto
+
+			#content-container
+				margin 0 auto
+				width 90vw
+
+				@media screen and (min-width 768px)
+					width 60vw
+
+				@media screen and (min-width 1024px)
+					width 40vw
+
+				h1
+					font-size 3em
+
+				form
+					margin-top 5vh
+					margin-bottom 5vh
+
+					label
+						width 100%
+						display inline-block
+						margin-top .8em
+
+						&.inline
+							display inline
+
+						&.label-info.required-info
+							color var(--healthy-red)
+
+						&.required:after
+							content "*"
+							color var(--healthy-red)
+
+					input, textarea
+						width 100%
+						margin-top .2em
+						display block
+						box-sizing border-box
+						border none
+						outline none
+						background none
+						border-bottom 2px solid var(--kinda-gray)
+						border-radius 0
+						color white
+						transition var(--border-bottom-color) .2s linear
+
+						&:hover
+							border-bottom-color white
+
+						&:focus
+							border-bottom-color var(--theme-color)
+
+						&[type='radio']
+							display inline-block
+							width max-content
+							margin .5em
+							margin-left 0
+							cursor: pointer
+
+						&[type='submit']
+							background none
+							color white
+							border-bottom-color white
+							font-weight bold
+							padding .2em .5em
+							cursor pointer
+							width max-content
+
+							&:hover:not([disabled])
+								background white
+								color black
+
+						&[type='file']
+							color white
+							border-bottom none
+							cursor pointer
+
+						&[disabled]
+							cursor not-allowed
+							color var(--kinda-gray)
+							border-color var(--kinda-gray)
+
+							&:active
+								pointer-events none
+
+						&.status-bad
+							color red
+							border-bottom-color red
+
+					#username
+						text-align right
+						font-size 1em
+
+					textarea
+						font-family sans-serif
+						resize vertical
+						height 10em
+						min-height 5em
+						max-height 60vh
+
+					i
+						display inline-block
+						margin .5em 0
+
+					#username, #metropolia-domain
+						max-width 50%
+						width max-content
+						display inline
+
+				table
+					border-collapse collapse
+
+					td
+						padding .5em
+
+						.clickable
+							text-decoration underline
+							cursor pointer
+
+							&:hover
+								color var(--kinda-gray)
+
+					thead tr
+						background var(--panel-color)
+
+					@media screen and (max-width 768px)
+						td, tr, th
+							display block
+
+				pre
+					word-break break-word
+					white-space pre-wrap
+
+		footer
+			display flex
+			flex-flow row wrap
+			justify-content space-between
+			background var(--background-color-dark)
+			padding .5em 0
+
+			p
+				margin .5em 2em
