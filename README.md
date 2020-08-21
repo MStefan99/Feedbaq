@@ -1,7 +1,5 @@
 # Feedbaq
 
-![Feedbaq logo][logo]
-
 ## What is Feedbaq?
 Feedbaq is a simple web application which allows you to collect and view questions
 and feedback while you're presenting.
@@ -16,6 +14,5 @@ for the release you downloaded.
 You can try Feedbaq for free [here][demo].
 
 
-[logo]: public/img/logo.svg
 [releases]: https://github.com/MStefan99/Feedbaq/releases/
 [demo]: https://fq.mstefan99.com/

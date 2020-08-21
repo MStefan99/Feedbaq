@@ -1,3 +1,11 @@
+theme-color = #ffc14b
+healthy-red = #bd0000
+kinda-gray = #888
+background-color = #28282f
+dark-color = #18181c
+panel-color = #00000088
+
+
 html
 	color white
 	font-size 12pt
@@ -10,16 +18,10 @@ html
 		min-height 100vh
 		margin 0
 		overflow-x hidden
-		background var(--background-color)
-		--theme-color #ffc14b
-		--healthy-red #bd0000
-		--kinda-gray #888
-		--background-color #28282f
-		--dark-color #18181c
-		--panel-color #00000088
+		background background-color
 
 		::selection
-			background var(--theme-color)
+			background theme-color
 			color white
 
 		.hidden
@@ -33,7 +35,7 @@ html
 			color white
 
 			&:hover
-				color var(--kinda-gray)
+				color kinda-gray
 
 		.container-horizontal
 			display flex
@@ -128,14 +130,17 @@ html
 					.question, .feedback
 						padding 1em
 						margin-bottom 1em
-						background-color var(--dark-color)
+						background-color dark-color
 						border-radius 10px
+
+						&.answered
+							background-color darken(background-color, 10%)
 
 						p
 							margin-top 0
 
 						.answered
-							color var(--kinda-gray)
+							color kinda-gray
 
 				#qr
 					margin 0 auto
@@ -149,36 +154,37 @@ html
 					label
 						width 100%
 						display inline-block
-						margin-top .8em
+						margin .8em 0
 
 						&.inline
 							display inline
 
 						&.label-info.required-info
-							color var(--healthy-red)
+							color healthy-red
 
 						&.required:after
 							content "*"
-							color var(--healthy-red)
+							color healthy-red
 
 					input, textarea
 						width 100%
 						margin-top .2em
+						padding .5em 0
 						display block
 						box-sizing border-box
 						border none
 						outline none
 						background none
-						border-bottom 2px solid var(--kinda-gray)
+						border-bottom 2px solid kinda-gray
 						border-radius 0
 						color white
-						transition var(--border-bottom-color) .2s linear
+						transition border-bottom-color .2s linear
 
 						&:hover
 							border-bottom-color white
 
 						&:focus
-							border-bottom-color var(--theme-color)
+							border-bottom-color theme-color
 
 						&[type='radio']
 							display inline-block
@@ -187,12 +193,13 @@ html
 							margin-left 0
 							cursor: pointer
 
-						&[type='submit']
+						&[type='submit'], &[type='button']
 							background none
 							color white
 							border-bottom-color white
 							font-weight bold
-							padding .2em .5em
+							margin .5em 0 1em 0
+							padding .5em .75em
 							cursor pointer
 							width max-content
 
@@ -207,8 +214,8 @@ html
 
 						&[disabled]
 							cursor not-allowed
-							color var(--kinda-gray)
-							border-color var(--kinda-gray)
+							color kinda-gray
+							border-color kinda-gray
 
 							&:active
 								pointer-events none
@@ -232,11 +239,27 @@ html
 					word-break break-word
 					white-space pre-wrap
 
+			.menu
+				position fixed
+				min-width 120px
+				min-height 20px
+				border-radius 8px
+				overflow hidden
+
+				.menu-element
+					cursor pointer
+					background lighten(background-color, 10%)
+					padding 1em .5em
+					font-weight bold
+
+					&:hover
+						background lighten(background-color, 5%)
+
 		footer
 			display flex
 			flex-flow row wrap
 			justify-content space-between
-			background var(--background-color-dark)
+			background background-color-dark
 			padding .5em 0
 
 			p

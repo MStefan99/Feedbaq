@@ -34,35 +34,14 @@ module.exports = {
 		return wss;
 	},
 
-	sendQuestion: (question) => {
+	event: (headers, body) => {
 		if (!wss) {
 			throw new Error('Please start the server first');
 		}
 
 		const message = JSON.stringify({
-			header: {
-				type: 'broadcast',
-				event: 'newQuestion'
-			},
-			data: question
-		});
-
-		wss.clients.forEach(ws => {
-			ws.send(message);
-		});
-	},
-
-	sendFeedback: (feedback) => {
-		if (!wss) {
-			throw new Error('Please start the server first');
-		}
-
-		const message = JSON.stringify({
-			header: {
-				type: 'broadcast',
-				event: 'newFeedback'
-			},
-			data: feedback
+			header: headers,
+			data: body
 		});
 
 		wss.clients.forEach(ws => {

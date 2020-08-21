@@ -7,6 +7,7 @@ const flash = require('./lib/flash');
 const openDB = require('./lib/db');
 const setup = require('./lib/setup');
 const socket = require('./lib/socket');
+const QRCode = require('qrcode');
 
 const router = express.Router();
 router.use(flash());
@@ -56,11 +57,17 @@ router.get('/presentations/:id/splash', async (req, res) => {
 		_id: ObjectID(req.params.id)
 	});
 
+	const protocol = process.env.NO_HTTPS? 'http://': "https://";
+	const url = protocol + req.headers.host
+		+ '/presentations/' + req.params.id + '/'
+
 	res.render('splash', {
 		name: presentation.name,
 		host: req.get('host'),
 		id: presentation._id,
-		protocol: process.env.NO_HTTPS? 'http://' : 'https://'
+		qrData: await QRCode.toDataURL(url, {
+			scale: 8
+		})
 	});
 });
 
@@ -130,7 +137,9 @@ router.post('/presentations/:id/feedback', async (req, res) => {
 		$push: {feedback: feedback}
 	});
 
-	socket.sendFeedback(feedback);
+	socket.event({
+		event: 'addFeedback'
+	}, feedback);
 	res.flash({
 		title: 'Feedback sent',
 		info: 'Your feedback was sent to the presenter'
@@ -164,12 +173,41 @@ router.post('/presentations/:id/questions', async (req, res) => {
 		$push: {questions: question}
 	});
 
-	socket.sendQuestion(question);
+	socket.event({
+		event: 'addQuestion'
+	}, question);
 	res.flash({
 		title: 'Question sent',
 		info: 'Your question was sent to the presenter'
 	})
 	.redirect(303, '/presentations/' + req.params.id + '/');
+});
+
+
+router.patch('/presentations/:pid/questions/:qid',
+	async (req, res) => {
+		const db = await openDB('feedbaq');
+		const r = await db.collection('presentations').findOneAndUpdate({
+			_id: ObjectID(req.params.pid),
+			'questions._id': ObjectID(req.params.qid)
+		}, {
+			$set: {'questions.$.answered': true}
+		}, {
+			projection: {'questions.$': 1}
+		});
+		const chat = r.value;
+
+		if (!chat.questions) {
+			res.status(400).send('NOT_FOUND');
+		} else {
+			const question = chat.questions[0];
+			question.answered = true;
+
+			socket.event({
+				event: 'updateQuestion'
+			}, question);
+			res.sendStatus(200);
+		}
 });
 
 

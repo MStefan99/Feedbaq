@@ -14,5 +14,4 @@ block content
 		div.section
 			p Open this link: #[a(href='/p/' + id + '/')= host + '/p/' + id + '/']
 			p Or scan this QR-code:
-			img#qr(src='https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl='
-				+ protocol + host + '/p/' + id + '/')
+			img#qr(src=qrData)

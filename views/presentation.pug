@@ -14,13 +14,13 @@ block content
 				h2 Ask a question
 				form(action='/presentations/' + id + '/questions/' method='post')
 					label(for='new-question') Your question
-					input#new-question(type='text' placeholder='Type your question here'
-						autocomplete='off' name='text')
+					input#new-question(type='text' autocomplete='off' name='text'
+						placeholder='Have any questions about the presentation?')
 					input(type='submit' value='Submit question')
 			div
 				h2 Leave feedback
 				form(action='/presentations/' + id + '/feedback/' method='post')
 					label(for='new-feedback') Your feedback
-					input#new-feedback(type='text' placeholder='What do you have to say?'
-						autocomplete='off' name='text')
+					input#new-feedback(type='text' autocomplete='off' name='text'
+						placeholder='Have any comments that do not require an answer?')
 					input(type='submit' value='Submit feedback')
