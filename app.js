@@ -5,14 +5,35 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const http = require('http');
+const https = require('https');
+const fs = require('fs');
 
 const indexRouter = require('./src/router');
 const socket = require('./src/lib/socket');
+let server;
 
 const app = express();
 
+if (process.env.NO_HTTPS) {
+	server = http.createServer(app).listen(80);
+	console.log('Listening on HTTP, port 80');
+} else {
+	const serverOptions = {
+		hostname: 'apply.mineeclipse.com',
+		path: '/',
+		key: fs.readFileSync(process.env.KEYFILE),
+		cert: fs.readFileSync(process.env.CERTFILE)
+	};
 
-const server = http.createServer(app);
+	https.createServer(serverOptions, app).listen(443);
+	console.log('Listening on HTTPS, port 443');
+	http.createServer((req, res) => {
+		res.writeHead(301, {'Location': 'https://' + req.headers['host'] + req.url});
+		res.end();
+	}).listen(80);
+	console.log('HTTP redirect enabled, port 80 -> 443');
+}
+
 socket.startServer({
 	server: server,
 	path: '/socket/',
@@ -25,9 +46,21 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.set('x-powered-by', false);
 
+app.use((req, res, next) => {
+	res.set('Referrer-Policy', 'same-origin');
+	res.set('X-Content-Type-Options', 'nosniff');
+	res.set('X-Frame-Options', 'SAMEORIGIN');
+	if (!process.env.NO_HTTPS) {
+		res.set('Strict-Transport-Security', 'max-age=31536000'); // 1 year in seconds
+	}
+	next();
+});
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
+
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/favicon.ico', express.static(path.join(__dirname, 'public', 'img', 'logo.svg')));
 app.use('/', indexRouter);
 
 
@@ -38,9 +71,3 @@ app.use((err, req, res, next) => {
 	res.status(err.status || 500);
 	res.render('error');
 });
-
-
-server.listen(3001, () => {
-	console.log('Listening on port 3001');
-});
-

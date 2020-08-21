@@ -130,17 +130,20 @@ html
 					.question, .feedback
 						padding 1em
 						margin-bottom 1em
-						background-color dark-color
+						background dark-color
 						border-radius 10px
-
-						&.answered
-							background-color darken(background-color, 10%)
 
 						p
 							margin-top 0
 
-						.answered
-							color kinda-gray
+					.question
+						cursor: pointer
+
+						&:hover
+							background lighten(dark-color, 5%)
+
+						&.answered
+							background darken(background-color, 10%)
 
 				#qr
 					margin 0 auto
@@ -249,7 +252,7 @@ html
 				.menu-element
 					cursor pointer
 					background lighten(background-color, 10%)
-					padding 1em .5em
+					padding 1em
 					font-weight bold
 
 					&:hover

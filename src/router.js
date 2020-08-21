@@ -43,6 +43,11 @@ router.get('/presentations/:id', async (req, res) => {
 		_id: ObjectID(req.params.id)
 	});
 
+	if (!presentation) {
+		res.status(404).render('404');
+		return;
+	}
+
 	res.render('presentation', {
 		name: presentation.name,
 		id: presentation._id
@@ -56,6 +61,11 @@ router.get('/presentations/:id/splash', async (req, res) => {
 	const presentation = await db.collection('presentations').findOne({
 		_id: ObjectID(req.params.id)
 	});
+
+	if (!presentation) {
+		res.status(404).render('404');
+		return;
+	}
 
 	const protocol = process.env.NO_HTTPS? 'http://': "https://";
 	const url = protocol + req.headers.host
@@ -78,6 +88,11 @@ router.get('/presentations/:id/present', async (req, res) => {
 	const presentation = await db.collection('presentations').findOne({
 		_id: ObjectID(req.params.id)
 	});
+
+	if (!presentation) {
+		res.status(404).render('404');
+		return;
+	}
 
 	res.render('present', {
 		name: presentation.name,
@@ -218,6 +233,11 @@ router.get('/presentations/:id/feedback', async (req, res) => {
 		_id: ObjectID(req.params.id)
 	});
 
+	if (!presentation) {
+		res.status(404).render('404');
+		return;
+	}
+
 	res.json(presentation.feedback);
 });
 
@@ -228,6 +248,11 @@ router.get('/presentations/:id/questions', async (req, res) => {
 	const presentation = await db.collection('presentations').findOne({
 		_id: ObjectID(req.params.id)
 	});
+
+	if (!presentation) {
+		res.status(404).render('404');
+		return;
+	}
 
 	res.json(presentation.questions);
 });
