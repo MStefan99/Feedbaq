@@ -10,9 +10,4 @@ To install Feedbaq make sure you have a server with Node.js and MongoDB installe
 [releases][releases] page and download the latest release. Then follow instructions
 for the release you downloaded.
 
-## Demo 
-You can try Feedbaq for free [here][demo].
-
-
 [releases]: https://github.com/MStefan99/Feedbaq/releases/
-[demo]: https://fq.mstefan99.com/
