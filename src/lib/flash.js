@@ -2,11 +2,9 @@
 
 const dataCookieOptions = {
 	httpOnly: true,
-	path: '/',
+	maxAge: 60 * 60 * 24 * 7,
 	sameSite: 'strict',
-	secure: !process.env.NO_HTTPS,
-	maxAge: 7 * 24 * 60 * 60 * 1000,  // 1-week timeout
-}
+};
 
 
 function flash(flashOptions = {}) {
@@ -51,4 +49,4 @@ module.exports = () => {
 		res.flash = flash;
 		next();
 	}
-}
+};

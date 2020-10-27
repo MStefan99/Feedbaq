@@ -5,8 +5,6 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const http = require('http');
-const https = require('https');
-const fs = require('fs');
 
 const indexRouter = require('./src/router');
 const socket = require('./src/lib/socket');
@@ -14,25 +12,11 @@ let server;
 
 const app = express();
 
-if (process.env.NO_HTTPS) {
-	server = http.createServer(app).listen(80);
-	console.log('Listening on HTTP, port 80');
-} else {
-	const serverOptions = {
-		hostname: 'apply.mineeclipse.com',
-		path: '/',
-		key: fs.readFileSync(process.env.KEYFILE),
-		cert: fs.readFileSync(process.env.CERTFILE)
-	};
-
-	https.createServer(serverOptions, app).listen(443);
-	console.log('Listening on HTTPS, port 443');
-	http.createServer((req, res) => {
-		res.writeHead(301, {'Location': 'https://' + req.headers['host'] + req.url});
-		res.end();
-	}).listen(80);
-	console.log('HTTP redirect enabled, port 80 -> 443');
-}
+server = http
+	.createServer(app)
+	.listen(process.env.PORT, () => {
+		console.log('Listening on HTTP, port ' + server.address().port);
+});
 
 socket.startServer({
 	server: server,

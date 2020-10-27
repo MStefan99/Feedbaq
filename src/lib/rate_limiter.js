@@ -60,7 +60,6 @@ module.exports = (options) => {
 			buckets.push(bucket);
 		}
 
-		console.log('Bucket ' + bucket.id + ' tagged ' + bucket.tag + ': ' + bucket.tokens);
 		bucket.tokens += Math.floor((Date.now() - bucket.modified)
 			/ 1000 / 60 * options.rate);
 		bucket.modified = Date.now();

@@ -11,7 +11,7 @@ const host = window.location.host;
 const socket = new WebSocket(`ws://${host}/socket/`);
 
 const presentationID = window.location.href
-.match(/\/p(resentations)?\/(.*?)\//)[2];
+	.match(/\/p(resentations)?\/(.*?)\//)[2];
 
 
 'click'.split(' ').forEach(event => {
@@ -25,9 +25,9 @@ const presentationID = window.location.href
 
 function answerQuestion(question) {
 	new Jui(`.question[data-id='${question._id}']`)
-	.addClass('answered');
-	new Jui(`.question[data-id='${question._id}'] .answered`)
-	.text('Answered');
+		.addClass('answered');
+	new Jui(`.question[data-id='${question._id}'] .answered-label`)
+		.text('Answered');
 }
 
 
@@ -35,30 +35,37 @@ function addQuestion(question) {
 	new Jui(`
 				<div class="question ${question.answered? 'answered' : ''}">
 					<p>${question.text}</p>
-					<span class="answered">
-						${question.answered ? 'Answered' : 'Not answered'}
+					<span class="answered-label">
+						${question.answered? 'Answered' : 'Not answered'}
 					</span>
 				</div>`)
-	.prop('data-id', question._id)
-	.appendTo(questionContainer)
-	.addEventListener('click contextmenu', questionEvent => {
-		questionEvent.preventDefault();
-		new Jui('.menu').remove();
+		.prop('data-id', question._id)
+		.appendTo(questionContainer)
+		.on('click contextmenu', questionEvent => {
+			questionEvent.preventDefault();
+			new Jui('.menu').remove();
 
-		new Jui(`<div class="menu"></div>`)
-		.css('left', questionEvent.clientX + 'px')
-		.css('top', questionEvent.clientY + 'px')
-		.append(new Jui(`<div class="menu-element">Mark as answered</div>`)
-		.addEventListener('click', menuEvent => {
-			answerQuestion(question);
+			if (!questionEvent.target.closest('.question').classList.contains('answered')) {
+				new Jui(`<div class="menu"></div>`)
+					.css('left', questionEvent.clientX + 'px')
+					.css('top', questionEvent.clientY + 'px')
+					.append(new Jui(`<div class="menu-element">Mark as answered</div>`)
+						.on('click', async () => {
+							answerQuestion(question);
 
-			fetch('/presentations/' + presentationID + '/questions/'
-				+ question._id + '/', {
-				method: 'PATCH'
-			});
-		}))
-		.appendTo(questionContainer);
-	});
+							const res = await fetch('/presentations/'
+								+ presentationID + '/questions/' + question._id + '/', {
+								method: 'PATCH'
+							});
+
+							if (!res.ok) {
+								alert('Could not mark question as answered. ' +
+									'Please check your connection.');
+							}
+						}))
+					.appendTo(questionContainer);
+			}
+		});
 }
 
 
@@ -67,8 +74,8 @@ function addFeedback(feedback) {
 				<div class="feedback">
 					<p>${feedback.text}</p>
 				</div>`)
-	.prop('data-id', feedback._id)
-	.appendTo(feedbackContainer);
+		.prop('data-id', feedback._id)
+		.appendTo(feedbackContainer);
 }
 
 
@@ -86,7 +93,6 @@ socket.onmessage = e => {
 
 		case 'updateQuestion':
 			answerQuestion(message.data);
-
 			break;
 	}
 }

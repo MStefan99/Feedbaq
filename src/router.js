@@ -69,7 +69,7 @@ router.get('/presentations/:id/splash', async (req, res) => {
 
 	const protocol = process.env.NO_HTTPS? 'http://': "https://";
 	const url = protocol + req.headers.host
-		+ '/presentations/' + req.params.id + '/'
+		+ '/p/' + req.params.id + '/';
 
 	res.render('splash', {
 		name: presentation.name,
@@ -142,7 +142,7 @@ router.post('/presentations/:id/feedback', async (req, res) => {
 
 	const feedback = {
 		_id: ObjectID(),
-		text: req.body.text
+		text: req.body.text.trim()
 	}
 
 	const db = await openDB('feedbaq');
@@ -177,7 +177,7 @@ router.post('/presentations/:id/questions', async (req, res) => {
 
 	const question = {
 		_id: ObjectID(),
-		text: req.body.text,
+		text: req.body.text.trim(),
 		answered: false
 	}
 
@@ -256,7 +256,6 @@ router.get('/presentations/:id/questions', async (req, res) => {
 
 	res.json(presentation.questions);
 });
-
 
 
 module.exports = router;

@@ -3,11 +3,11 @@
 const header = document.querySelector('header');
 
 
-addEventListener('scroll', function() {
+addEventListener('scroll', e => {
 	if (window.scrollY) {
-		header.style.background = 'var(--panel-color)';
+		header.classList.add('dark');
 	} else {
-		header.style.background = 'none';
+		header.classList.remove('dark');
 	}
 });
 
