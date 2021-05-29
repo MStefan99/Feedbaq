@@ -110,4 +110,3 @@ fabric.properties
 # Custom rules
 node_modules
 public/style/*.css
-package-lock.json
