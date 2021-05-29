@@ -1,3 +1,5 @@
+// Shared library by MStefan99
+
 'use strict';
 
 
@@ -20,9 +22,9 @@ export default class Jui {
 			this.nodes = Array.from(query);
 		} else if (query.match(/^\s*<.*>\s*$/s)) {  // If query is an HTML string
 			query = query  // Removing whitespaces
-				.replace(/^\s*|\s*$/g, '')
-				.replace(/>\s*</g, '><')
-				.replace(/[\t\n]+|\\ /g, ' ');
+			.replace(/^\s*|\s*$/g, '')
+			.replace(/>\s*</g, '><')
+			.replace(/[\t\n]+|\\ /g, ' ');
 
 			if (query.match(/<tr|<td/)) {
 				const table = document.createElement('table');
@@ -136,15 +138,43 @@ export default class Jui {
 	}
 
 
-	prop(propertyName, value) {
-		if (value === undefined) {  // Get property
-			return this.nodes[0].getAttribute(propertyName);
-		} else {  // Set property
+	attr(attributeName, value) {
+		if (value === undefined) {  // Get attribute
+			return this.nodes[0].getAttribute(attributeName);
+		} else {  // Set attribute
 			this.nodes.forEach(node => {
-				node.setAttribute(propertyName, value);
+				node.setAttribute(attributeName, value);
 			});
 			return this;
 		}
+	}
+
+
+	removeAttr(attributeName) {
+		this.nodes.forEach(node => {
+			node.removeAttribute(attributeName);
+		});
+		return this;
+	}
+
+
+	prop(propertyName, value) {
+		if (value === undefined) {  // Get property
+			return this.nodes[0][propertyName];
+		} else {  // Set property
+			this.nodes.forEach(node => {
+				node[propertyName] = value;
+			});
+			return this;
+		}
+	}
+
+
+	removeProp(propertyName) {
+		this.nodes.forEach(node => {
+			node[propertyName] = undefined;
+		});
+		return this;
 	}
 
 

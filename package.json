@@ -13,9 +13,11 @@
 		"body-parser": "^1.19.0",
 		"cookie-parser": "^1.4.5",
 		"express": "^4.17.1",
+		"flash-http": "^1.0.0",
 		"mongodb": "^3.6.0",
 		"pug": "^3.0.0",
 		"qrcode": "^1.4.4",
+		"rate-limiter": "^1.0.0",
 		"ws": "^7.3.1"
 	}
 }
