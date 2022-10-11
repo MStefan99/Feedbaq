@@ -3,7 +3,7 @@
 const express = require('express');
 const ObjectID = require('mongodb').ObjectID;
 
-const flash = require('express-flash');
+const flash = require('@mstefan99/express-flash');
 const openDB = require('./lib/db');
 const setup = require('./lib/setup');
 const socket = require('./lib/socket');
