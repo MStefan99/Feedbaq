@@ -1,13 +1,13 @@
 # Feedbaq
 
+![Maintenance](https://img.shields.io/maintenance/no/2020?style=flat-square)
+
 ## What is Feedbaq?
 Feedbaq is a simple web application which allows you to collect and view questions
-and feedback while you're presenting.
+and feedback while you're presenting. It was a project for me to learn more about 
+WebSocket and make something useful along the way.
 
 ## Installation
-To install Feedbaq make sure you have a server with Node.js and MongoDB installed
-(Node and MongoDB do not have to be on the same server), then navigate to the 
-[releases][releases] page and download the latest release. Then follow instructions
-for the release you downloaded.
+- Install MongoDB
+- Run `setup.sh` for automated setup
 
-[releases]: https://github.com/MStefan99/Feedbaq/releases/
